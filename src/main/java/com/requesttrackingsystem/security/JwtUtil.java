@@ -1,4 +1,4 @@
-package com.requesttrackingsystem.utils;
+package com.requesttrackingsystem.security;
 
 import com.requesttrackingsystem.entity.User;
 import io.jsonwebtoken.Claims;
@@ -49,4 +49,9 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    public Key getSigningKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes());
+    }
+
 }
