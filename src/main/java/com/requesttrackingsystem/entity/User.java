@@ -1,12 +1,17 @@
 package com.requesttrackingsystem.entity;
 
+import com.requesttrackingsystem.entity.enums.Role;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue
     private UUID id;
@@ -14,14 +19,43 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(unique = true, nullable = false)
+    private String email;
+
     @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public enum Role {
-        USER, ADMIN
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
     }
 
     public UUID getId() {
@@ -39,12 +73,16 @@ public class User {
     public Role getRole() {
         return role;
     }
+
     public void setId(UUID id) {
         this.id = id;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
@@ -54,4 +92,6 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
+
 }
