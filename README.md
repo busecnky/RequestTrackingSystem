@@ -21,7 +21,7 @@ Built with:
 - Global Exception Handling
 - Swagger UI for API documentation
 
-### [Frontend] (https://github.com/busecnky/RequestTrackingSystemFrontend)
+### [Frontend](https://github.com/busecnky/RequestTrackingSystemFrontend)
 - React 18+
 - React Router DOM
 - Axios
