@@ -9,5 +9,4 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByUserUsername(String username);
     List<Ticket> findByStatus(TicketStatus ticketStatus);
-    List<Ticket> findAllByStatus(TicketStatus ticketStatus);
 }

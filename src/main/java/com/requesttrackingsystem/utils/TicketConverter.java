@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Component
 public class TicketConverter {
 
-    public TicketResponseDto toDto(Ticket ticket) {
+    public TicketResponseDto toTicketResponseDto(Ticket ticket) {
         TicketResponseDto ticketResponseDto = new TicketResponseDto();
         ticketResponseDto.setId(ticket.getId());
         ticketResponseDto.setTitle(ticket.getTitle());
@@ -25,7 +25,7 @@ public class TicketConverter {
         return ticketResponseDto;
     }
 
-    public Ticket toEntity(TicketCreateRequestDto ticketCreateRequestDto, User user) {
+    public Ticket toTicketEntity(TicketCreateRequestDto ticketCreateRequestDto, User user) {
         Ticket ticket = new Ticket();
         ticket.setTitle(ticketCreateRequestDto.title());
         ticket.setDescription(ticketCreateRequestDto.description());

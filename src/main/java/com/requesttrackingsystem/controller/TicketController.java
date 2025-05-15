@@ -2,7 +2,6 @@ package com.requesttrackingsystem.controller;
 
 import com.requesttrackingsystem.dto.request.TicketCreateRequestDto;
 import com.requesttrackingsystem.dto.response.TicketResponseDto;
-import com.requesttrackingsystem.entity.enums.TicketStatus;
 import com.requesttrackingsystem.service.TicketService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/requests")
+@RequestMapping("/tickets")
+@CrossOrigin("*")
 public class TicketController {
 
     private final TicketService ticketService;
@@ -25,9 +25,10 @@ public class TicketController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<TicketResponseDto> createTicket(@Valid @RequestBody TicketCreateRequestDto dto,
+    public ResponseEntity<TicketResponseDto> createTicket(@Valid @RequestBody
+                                                              TicketCreateRequestDto ticketCreateRequestDto,
                                                            @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(ticketService.createTicket(dto, userDetails.getUsername()));
+        return ResponseEntity.ok(ticketService.createTicket(ticketCreateRequestDto, userDetails.getUsername()));
     }
 
     @GetMapping("/my")
@@ -38,21 +39,22 @@ public class TicketController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<TicketResponseDto>> getAllTickets(@RequestParam(required = false) TicketStatus ticketStatus) {
-        return ResponseEntity.ok(ticketService.getAllTickets(ticketStatus));
+    public ResponseEntity<List<TicketResponseDto>> getAllTicketsByStatus(@RequestParam(required = false)
+                                                                     String ticketStatus) {
+        return ResponseEntity.ok(ticketService.getAllTicketsByStatus(ticketStatus));
     }
 
     @PostMapping("/{id}/respond")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TicketResponseDto> respondToTicket(@PathVariable Long id,
-                                                       @RequestBody String response) {
-        return ResponseEntity.ok(ticketService.respondToTicket(id, response));
+                                                       @RequestParam String responseText) {
+        return ResponseEntity.ok(ticketService.respondToTicket(id, responseText));
     }
 
-    @PostMapping("/{id}/status")
+    @PutMapping("/{id}/status")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TicketResponseDto> updateStatus(@PathVariable Long id,
-                                                   @RequestParam TicketStatus ticketStatus) {
+                                                   @RequestParam String ticketStatus) {
         return ResponseEntity.ok(ticketService.updateStatus(id, ticketStatus));
     }
 }

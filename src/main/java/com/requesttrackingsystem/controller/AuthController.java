@@ -5,13 +5,11 @@ import com.requesttrackingsystem.dto.request.RegisterRequestDto;
 import com.requesttrackingsystem.dto.response.JwtResponseDto;
 import com.requesttrackingsystem.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin("*")
 public class AuthController {
 
     private final UserService userService;
@@ -22,13 +20,13 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public JwtResponseDto register(@Valid @RequestBody RegisterRequestDto request) {
-        return userService.register(request);
+    public JwtResponseDto register(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
+        return userService.register(registerRequestDto);
     }
 
     @PostMapping("/login")
-    public JwtResponseDto login(@Valid @RequestBody LoginRequestDto request) {
-        return userService.login(request);
+    public JwtResponseDto login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        return userService.login(loginRequestDto);
     }
 }
 

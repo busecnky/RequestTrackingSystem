@@ -38,10 +38,6 @@ public class JwtUtil {
         return parseClaims(token).getSubject();
     }
 
-    public String extractRole(String token) {
-        return (String) parseClaims(token).get("role");
-    }
-
     private Claims parseClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(secret.getBytes())

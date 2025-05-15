@@ -29,47 +29,54 @@ public class TicketServiceImpl implements TicketService {
     public TicketResponseDto createTicket(TicketCreateRequestDto ticketCreateRequestDto, String username) {
         User user = userService.findByUsername(username);
 
-        Ticket requestedTicket = ticketConverter.toEntity(ticketCreateRequestDto, user);
+        Ticket requestedTicket = ticketConverter.toTicketEntity(ticketCreateRequestDto, user);
         Ticket savedTicket = ticketRepository.save(requestedTicket);
 
-        return ticketConverter.toDto(savedTicket);
+        return ticketConverter.toTicketResponseDto(savedTicket);
     }
 
     @Override
     public List<TicketResponseDto> getUserTickets(String username) {
         return ticketRepository.findByUserUsername(username)
                 .stream()
-                .map(ticketConverter::toDto)
+                .map(ticketConverter::toTicketResponseDto)
                 .toList();
     }
 
     @Override
-    public List<TicketResponseDto> getAllTickets(TicketStatus ticketStatus) {
-        List<Ticket> requests = (ticketStatus != null)
-                ? ticketRepository.findByStatus(ticketStatus)
-                : ticketRepository.findAll();
-
-        return requests.stream()
-                .map(ticketConverter::toDto)
-                .toList();    }
-
-    @Override
-    public TicketResponseDto respondToTicket(Long ticketId, String response) {
-        Ticket request = ticketRepository.findById(ticketId)
-                .orElseThrow(() -> new RuntimeException("Request not found"));
-
-        request.setResponse(response);
-        request.setStatus(TicketStatus.RESPONDED);
-        return ticketConverter.toDto(ticketRepository.save(request));
+    public List<TicketResponseDto> getAllTicketsByStatus(String ticketStatus) {
+        List<Ticket> tickets ;
+        if (ticketStatus == null || ticketStatus.trim().isEmpty()) {
+            tickets = ticketRepository.findAll();
+        } else {
+            try {
+                TicketStatus enumStatus = TicketStatus.valueOf(ticketStatus.toUpperCase());
+                tickets = ticketRepository.findByStatus(enumStatus);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid status value: " + ticketStatus);
+            }
+        }
+        return tickets.stream()
+                .map(ticketConverter::toTicketResponseDto)
+                .toList();
     }
 
     @Override
-    public TicketResponseDto updateStatus(Long ticketId, TicketStatus ticketStatus) {
+    public TicketResponseDto respondToTicket(Long ticketId, String responseText) {
+        Ticket request = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new RuntimeException("Request not found"));
+
+        request.setResponse(responseText);
+        return ticketConverter.toTicketResponseDto(ticketRepository.save(request));
+    }
+
+    @Override
+    public TicketResponseDto updateStatus(Long ticketId, String ticketStatus) {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new RuntimeException("Ticket not found"));
 
-        ticket.setStatus(ticketStatus);
-        return ticketConverter.toDto(ticketRepository.save(ticket));
+        ticket.setStatus(TicketStatus.valueOf(ticketStatus));
+        return ticketConverter.toTicketResponseDto(ticketRepository.save(ticket));
     }
 
 }
