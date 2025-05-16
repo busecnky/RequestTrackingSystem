@@ -4,7 +4,6 @@ import com.requesttrackingsystem.dto.request.TicketCreateRequestDto;
 import com.requesttrackingsystem.dto.response.TicketResponseDto;
 import com.requesttrackingsystem.entity.Ticket;
 import com.requesttrackingsystem.entity.User;
-import com.requesttrackingsystem.entity.enums.TicketCategory;
 import com.requesttrackingsystem.entity.enums.TicketStatus;
 import com.requesttrackingsystem.repository.TicketRepository;
 import com.requesttrackingsystem.service.UserService;
@@ -41,7 +40,7 @@ class TicketServiceImplTest {
 
     @Test
     void testCreateTicket() {
-        TicketCreateRequestDto requestDto = new TicketCreateRequestDto("title", "desc", TicketCategory.SERVICE);
+        TicketCreateRequestDto requestDto = new TicketCreateRequestDto("title", "desc", "SERVICE");
         User user = new User();
         Ticket ticket = new Ticket();
         Ticket savedTicket = new Ticket();

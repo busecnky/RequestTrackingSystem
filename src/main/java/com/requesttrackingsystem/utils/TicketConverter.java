@@ -4,6 +4,7 @@ import com.requesttrackingsystem.dto.request.TicketCreateRequestDto;
 import com.requesttrackingsystem.dto.response.TicketResponseDto;
 import com.requesttrackingsystem.entity.Ticket;
 import com.requesttrackingsystem.entity.User;
+import com.requesttrackingsystem.entity.enums.TicketCategory;
 import com.requesttrackingsystem.entity.enums.TicketStatus;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,7 @@ public class TicketConverter {
         Ticket ticket = new Ticket();
         ticket.setTitle(ticketCreateRequestDto.title());
         ticket.setDescription(ticketCreateRequestDto.description());
-        ticket.setCategory(ticketCreateRequestDto.ticketCategory());
+        ticket.setCategory(TicketCategory.valueOf(ticketCreateRequestDto.ticketCategory()));
         ticket.setStatus(TicketStatus.OPEN);
         ticket.setCreatedAt(LocalDateTime.now());
         ticket.setUser(user);

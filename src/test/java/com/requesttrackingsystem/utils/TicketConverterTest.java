@@ -25,7 +25,7 @@ class TicketConverterTest {
         TicketCreateRequestDto dto = new TicketCreateRequestDto(
                 "Test Title",
                 "Test Description",
-                TicketCategory.PROBLEM
+                "PROBLEM"
         );
 
         Ticket ticket = ticketConverter.toTicketEntity(dto, user);

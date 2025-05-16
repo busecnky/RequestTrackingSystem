@@ -2,7 +2,6 @@ package com.requesttrackingsystem.controller;
 
 import com.requesttrackingsystem.dto.request.TicketCreateRequestDto;
 import com.requesttrackingsystem.dto.response.TicketResponseDto;
-import com.requesttrackingsystem.entity.enums.TicketCategory;
 import com.requesttrackingsystem.service.TicketService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +32,7 @@ class TicketControllerTest {
 
     @Test
     void testCreateTicket() {
-        TicketCreateRequestDto requestDto = new TicketCreateRequestDto("Title", "Desc", TicketCategory.REQUEST);
+        TicketCreateRequestDto requestDto = new TicketCreateRequestDto("Title", "Desc", "REQUEST");
         TicketResponseDto responseDto = new TicketResponseDto();
 
         when(userDetails.getUsername()).thenReturn("testuser");
