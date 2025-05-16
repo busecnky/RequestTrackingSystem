@@ -51,7 +51,7 @@ PGPASS=your_postgres_password
 
 # JWT Secret
 SECRET=your_very_secret_key
-
+```
 ### 🔑 Demo Users
 ####👨‍💼 Admin User
 Username: admin1
