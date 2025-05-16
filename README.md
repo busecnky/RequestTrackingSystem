@@ -53,18 +53,20 @@ PGPASS=your_postgres_password
 SECRET=your_very_secret_key
 ```
 ### 🔑 Demo Users
-####👨‍💼 Admin User
-Username: admin1
-Password: admin123
-Role: ADMIN
-Permissions: View all tickets, filter by status, respond to tickets
+
+#### 👨‍💼 Admin User
+- Username: admin1
+- Password: admin123
+- Role: ADMIN
+- Permissions: View all tickets, filter by status, respond to tickets
 
 Admin User is created when the project start.
 
-####👤 Regular User
-Username: user1
-Password: password123
-Role: USER
-Permissions: Create & view personal tickets
+
+#### 👤 Regular User
+- Username: user1
+- Password: password123
+- Role: USER
+- Permissions: Create & view personal tickets
 
 
